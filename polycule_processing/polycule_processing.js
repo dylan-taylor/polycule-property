@@ -10,6 +10,8 @@ function setup() {
   createP();
   add_person_button = createButton("Add Person");
   add_person_button.mouseClicked(add_person);
+  deletion_line = false
+  selection_line = false
 }
 
 
@@ -21,6 +23,11 @@ function draw() {
   if (deletion_line) {
     stroke(155, 60, 60)
     line(deletion_start[0], deletion_start[1], mouseX, mouseY)
+  }
+  if (selection_line) {
+    stroke(0, 0, 0)
+    console.log("elo")
+    line(selection_start.x_location, selection_start.y_location, mouseX, mouseY)
   }
 }
 
@@ -62,24 +69,27 @@ class Person {
       this.relations.push(other)
     }
   }
-  function deletion_intersection(x_end, y_end) {
+  
+  deletion_intersection(x_end, y_end) {
     relations_to_remove = []
     deletion_line = [x_start, x_end, x_end, y_end]
     for (let j = 0; j < current_person.relations.length; j++) {
       current_relation = current_person.relations[j]
-      relation_line = [current_person.x_location, current_person.y_location, current_relation.x_location, current_relation.y_location]
-            
+      relation_line = [current_person.x_location, current_person.y_location, current_relation.x_location, current_relation.y_location]      
     }
   }
+  
 }
 
 function mousePressed() {
   selection_start = false
+  selection_line = false
   deletion_line = false
   
   for (let i = 0; i < people.length; i++) {
     if (people[i].mouse_in(mouseX, mouseY)) {
       selection_start = people[i]
+      selection_line = true
     }
   }
   
@@ -105,6 +115,12 @@ function mouseReleased() {
   
   if (deletion_line) {
     deletion_line = false
-    relati
   }
+  if (selection_line) {
+    selection_line = false
+  }
+}
+
+function lines_intersect(line_one, line_two) {
+  
 }
